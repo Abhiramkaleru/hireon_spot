@@ -28,7 +28,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post(`${baseUrl}/api/auth/login`, { email, password });
+      const res = await axios.post(`${baseUrl}api/auth/login`, { email, password });
       const { token, user } = res.data;
       login(token, user);
       

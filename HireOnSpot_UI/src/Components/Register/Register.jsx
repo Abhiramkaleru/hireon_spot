@@ -23,7 +23,7 @@ const Register = () => {
     
     try {
       // Hard-code role as "job_seeker" so employers cannot self-register.
-      const res = await axios.post(`${baseUrl}/api/auth/register`, { 
+      const res = await axios.post(`${baseUrl}api/auth/register`, { 
         name, 
         email, 
         password, 
@@ -32,7 +32,7 @@ const Register = () => {
       
       if (res.status === 201) {
         // Immediately log in after successful registration.
-        const loginRes = await axios.post(`${baseUrl}/api/auth/login`, { email, password });
+        const loginRes = await axios.post(`${baseUrl}api/auth/login`, { email, password });
         const { token, user } = loginRes.data;
         login(token, user);
         navigate('/dashboard');
