@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import bgImage from '../../assets/bg2.jpg';
 
-const baseUrl = import.meta.env.BASE_URL;
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const Register = () => {
   const { login } = useContext(AuthContext);

@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { motion } from 'framer-motion';
 import bgImage from '../../assets/bg2.jpg';
 
-const baseUrl = import.meta.env.BASE_URL;
+const baseUrl = import.meta.env.VITE_BASE_URL
 
 const Login = () => {
   const { login, logout } = useContext(AuthContext);
@@ -16,6 +16,8 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [guestRole, setGuestRole] = useState('job_seeker'); // Default to job_seeker
+  console.log(baseUrl);
+  
 
   useEffect(() => {
     logout();
