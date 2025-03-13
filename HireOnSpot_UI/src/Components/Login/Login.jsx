@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { motion } from 'framer-motion';
 import bgImage from '../../assets/bg2.jpg';
 
-const baseUrl = process.env.BASE_URL;
+const baseUrl = import.meta.env.BASE_URL;
 
 const Login = () => {
   const { login, logout } = useContext(AuthContext);
