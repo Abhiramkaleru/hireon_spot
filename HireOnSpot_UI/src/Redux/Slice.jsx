@@ -3,7 +3,7 @@ import axios from "axios";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 // Base URL
-const API_URL = `${baseUrl}api/admin/users`; // Adjust according to your backend
+const API_URL = `${baseUrl}/api/admin/users`; // Adjust according to your backend
 
 // 1️⃣ Fetch Employers
 export const fetchEmployers = createAsyncThunk(
