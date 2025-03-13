@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/jobs"; // Adjust based on backend
+const baseUrl = process.env.BASE_URL;
+const API_URL = `${baseUrl}/api/jobs`; // Adjust based on backend
 
 // 1️⃣ Fetch Employer Jobs
 export const fetchJobs = createAsyncThunk(

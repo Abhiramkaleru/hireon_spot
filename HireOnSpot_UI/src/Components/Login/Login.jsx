@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { motion } from 'framer-motion';
 import bgImage from '../../assets/bg2.jpg';
 
+const baseUrl = process.env.BASE_URL;
+
 const Login = () => {
   const { login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const res = await axios.post(`${baseUrl}/api/auth/login`, { email, password });
       const { token, user } = res.data;
       login(token, user);
       

@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import bgImage from '../../assets/bg2.jpg';
 
+const baseUrl = process.env.BASE_URL;
+
 const Register = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ const Register = () => {
     
     try {
       // Hard-code role as "job_seeker" so employers cannot self-register.
-      const res = await axios.post('http://localhost:5000/api/auth/register', { 
+      const res = await axios.post(`${baseUrl}/api/auth/register`, { 
         name, 
         email, 
         password, 
@@ -30,7 +32,7 @@ const Register = () => {
       
       if (res.status === 201) {
         // Immediately log in after successful registration.
-        const loginRes = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+        const loginRes = await axios.post(`${baseUrl}/api/auth/login`, { email, password });
         const { token, user } = loginRes.data;
         login(token, user);
         navigate('/dashboard');
