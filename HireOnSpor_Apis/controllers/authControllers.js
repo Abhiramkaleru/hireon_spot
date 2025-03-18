@@ -94,7 +94,7 @@ exports.updateUser = async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    const result = await UserModel.updateUsers(id, { name, email });
+    const result = await UserModel.updateUsers(id, { name, email, role });
     res.status(200);
     res.json(result);
   } catch (error) {

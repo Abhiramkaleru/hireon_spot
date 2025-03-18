@@ -17,11 +17,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ASCIIText from "../Animation/ASCII/AsciiText";
 // import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 // import { Pie } from "react-chartjs-2";
 import bgImage from "../../assets/bg2.jpg";
 // ChartJS.register(ArcElement, Tooltip, Legend);
 import Particles from "../Animation/Partical/Partical";
+import SplashCursor from "../Animation/Splash/Splash";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,6 +44,7 @@ const Home = () => {
     console.log("Searching for:", debouncedSearch);
     toast.info(`Searching for "${debouncedSearch}"`);
   };
+
 
   // Carousel settings for job listings (if needed)
   const carouselSettings = {
@@ -69,16 +72,6 @@ const Home = () => {
     { title: "Software Engineer", company: "Google", location: "Mountain View" },
   ];
 
-  // // Pie Chart data for application stats
-  // const pieData = {
-  //   labels: ["Hired", "Pending", "Rejected"],
-  //   datasets: [
-  //     {
-  //       data: [40, 35, 25],
-  //       backgroundColor: ["#007bff", "#ff9800", "#dc3545"],
-  //     },
-  //   ],
-  // };
 
   return (
     <div
@@ -115,6 +108,7 @@ const Home = () => {
           transition={{ duration: 0.5 }}
         >
           <div className="container-fluid d-flex justify-content-between align-items-center px-4">
+
             <Link className="navbar-brand fw-bold" to="/">
               <motion.svg
                 width="150"
@@ -352,11 +346,11 @@ const Home = () => {
         </section>
 
         {/* How It Works Section */}
-        <section className="container-fluid py-5 bg-white">
+        <section className="container-fluid py-5 text-white" style={{background: "rgba(13, 17, 54, 0.9)"}}>
           <div className="row justify-content-center">
             <div className="col-lg-12 text-center mb-5">
               <h2 className="fw-bold">How It Works</h2>
-              <p className="text-muted">
+              <p className="text-white">
                 A simple 4-step process to connect you with the perfect job.
               </p>
             </div>
@@ -514,7 +508,7 @@ const Home = () => {
                   { name: "IBM", logo: "https://pngimg.com/uploads/ibm/ibm_PNG19658.png" },
                   { name: "HCL", logo: "https://download.logo.wine/logo/HCL_Technologies/HCL_Technologies-Logo.wine.png" },
                   { name: "Capgemini", logo: "https://download.logo.wine/logo/Capgemini/Capgemini-Logo.wine.png" },
-                  { name: "Genpact", logo: "https://dwglogo.com/wp-content/uploads/2019/03/genpact_logo-1024x576.png" },
+                  { name: "Genpact", logo: "https://awsmp-logos.s3.amazonaws.com/seller-da4cx2zwvsjos/78f24e2fe2e409aac4a8874999f2ff5b.png" },
                   { name: "10K", logo: "https://miro.medium.com/max/1400/1*xdhm7cqz8DwDzQNXxhZXVA.png" },
                 ].map((company, index) => (
                   <div className="col-md-3" key={index}>
@@ -531,19 +525,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Application Stats Section
-        <section className="container-fluid py-5 bg-light">
-          <div className="container">
-            <div className="card shadow-sm">
-              <div className="card-body">
-                <h3 className="card-title text-center fw-bold">Application Stats</h3>
-                <div style={{ maxWidth: "400px", margin: "0 auto" }}>
-                  <Pie data={pieData} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
 
         {/* Footer */}
         <footer className="bg-dark text-white py-5">
@@ -658,5 +639,8 @@ const Home = () => {
     </div>
   );
 };
+
+
+
 
 export default Home;

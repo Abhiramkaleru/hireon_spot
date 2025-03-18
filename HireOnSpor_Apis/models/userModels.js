@@ -33,7 +33,7 @@ const findAllUsers = async () => {
 
 const updateUsers = async (userId, updatedData) => {
   try {
-    const { name, email} = updatedData;
+    const { name, email } = updatedData;
     const [result] = await db.query(
       "UPDATE users SET name = ?, email = ? WHERE id = ?",
       [name, email, userId]
