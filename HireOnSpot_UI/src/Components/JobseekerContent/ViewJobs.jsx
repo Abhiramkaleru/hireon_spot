@@ -83,7 +83,7 @@ const ViewJobs = () => {
                 }}
                 onClick={() => alert(`Applied for ${job.title}`)}
               >
-                Apply Now
+                Intrested
               </button>
             </div>
           ))

@@ -625,7 +625,7 @@ const JobSeekerDashboard = () => {
           <path d="M315 70 L325 75 L315 80" fill="#3b82f6" />
         </g>
       </svg>
-      {!collapsed && "Job Seeker Dashboard"}
+      {!collapsed && "JobSeeker Dashboard"}
     </div>
   );
 
@@ -690,7 +690,7 @@ const JobSeekerDashboard = () => {
       {!isMobile && desktopSidebar}
       {isMobile && mobileMenu}
 
-      <Layout style={{ width: screens.lg ? "85vw" : "100%" }}>
+      <Layout style={{ width: screens.lg ? "81vw" : "100%" }}>
         {/* Header */}
         <Header
           style={{
@@ -709,13 +709,13 @@ const JobSeekerDashboard = () => {
               type="text"
               icon={<MenuOutlined />}
               onClick={() => setDrawerVisible(true)}
-              style={{ marginRight: 16 }}
+              style={{ marginRight: 1 }}
             />
           )}
-          <span style={{ fontSize: isMobile ? "14px" : "18px", fontWeight: "bold" }}>
+          <span style={{ fontSize: isMobile ? "12px" : "14px", fontWeight: "bold" }}>
             Welcome, {auth.user ? auth.user.email : "Job Seeker"}!
           </span>
-          <Button type="primary" onClick={handleLogout}>
+          <Button type="primary" onClick={handleLogout} style={{ width: isMobile ? "70px" : "80px", height: isMobile ? "30px" : "35px" }}>
             Logout
           </Button>
         </Header>
