@@ -21,6 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 // import { Pie } from "react-chartjs-2";
 import bgImage from "../../assets/bg2.jpg";
 // ChartJS.register(ArcElement, Tooltip, Legend);
+import Particles from "../Animation/Partical/Partical";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -214,11 +215,41 @@ const Home = () => {
         </motion.nav>
 
         {/* Hero Section with dark background matching Register */}
+
         <header
           className="pt-5 mt-5"
-          style={{ background: "rgba(13, 17, 54, 0.9)" }}
+          style={{
+            position: "relative",
+            overflow: "hidden",
+            height: "600px", // Matches the particles container height
+            background: "rgba(13, 17, 54, 0.9)", // Header background color
+          }}
         >
-          <div className="container-fluid text-center py-5">
+          {/* Particles Background Wrapper */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              zIndex: 0,
+            }}
+          >
+            <Particles
+              particleColors={["#ffffff", "#ffffff"]}
+              particleCount={200}
+              particleSpread={10}
+              speed={0.1}
+              particleBaseSize={100}
+              moveParticlesOnHover={true}
+              alphaParticles={false}
+              disableRotation={false}
+            />
+          </div>
+
+          {/* Header Content */}
+          <div className="container-fluid text-center py-5" style={{ position: "relative", zIndex: 1 }}>
             <motion.h1
               className="display-4 fw-bold mb-4"
               style={{ color: "#ffffff" }}
@@ -284,6 +315,8 @@ const Home = () => {
             </motion.button>
           </div>
         </header>
+
+
 
         {/* Features Section */}
         <section className="container-fluid py-5 bg-light">
