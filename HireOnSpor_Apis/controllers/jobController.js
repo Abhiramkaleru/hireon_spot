@@ -1,6 +1,6 @@
 const Job = require('../models/jobModel');
 
-// 👉 Create Job
+// Create Job
 const createJob = async (req, res) => {
   try {
     const { title, description, salary, location, requirements, mode } = req.body;
@@ -26,7 +26,7 @@ const createJob = async (req, res) => {
   }
 };
 
-// 👉 Get All Jobs
+//Get All Jobs
 const getJobs = async (req, res) => {
   try {
     const jobs = await Job.getAllJobs();
@@ -37,7 +37,7 @@ const getJobs = async (req, res) => {
   }
 };
 
-// 👉 Get Single Job By ID
+//Single Job By ID
 const getJobById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -54,7 +54,7 @@ const getJobById = async (req, res) => {
   }
 };
 
-// 👉 Update Job (Employer Only)
+// Update Job 
 const updateJob = async (req, res) => {
   try {
     const { id } = req.params;
@@ -78,7 +78,7 @@ const updateJob = async (req, res) => {
   }
 };
 
-// 👉 Delete Job (Employer Only)
+//Delete Job 
 const deleteJob = async (req, res) => {
   try {
     const { id } = req.params;

@@ -190,13 +190,14 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, theme, Button, Grid, Drawer } from "antd";
 import JobPostingForm from "../EmployerContent/PostJob";
+import JobManager from "../EmployerContent/JobManager";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { useBreakpoint } = Grid;
 
 const Dashboard = () => <div><h2>Dashboard Overview</h2><p>This is where you'll manage job postings and track applicants.</p></div>;
-const ManageJobs = () => <div><h2>Manage Jobs</h2><p>View and manage your job listings.</p></div>;
-const JobSeekers = () => <div><h2>Job Seekers</h2><p>Browse and interact with job seekers.</p></div>;
+// const ManageJobs = () => <div><h2>Manage Jobs</h2><p>View and manage your job listings.</p></div>;
+// const JobSeekers = () => <div><h2>Job Seekers</h2><p>Browse and interact with job seekers.</p></div>;
 const PublicPostings = () => <div><h2>Public Postings</h2><p>View public job postings.</p></div>;
 const PrivatePostings = () => <div><h2>Private Postings</h2><p>Manage private job postings.</p></div>;
 
@@ -227,11 +228,11 @@ const EmployerDashboard = () => {
         setSelectedComponent(<JobPostingForm />);
         break;
       case "3":
-        setSelectedComponent(<ManageJobs />);
+        setSelectedComponent(<JobManager />);
         break;
-      case "4":
-        setSelectedComponent(<JobSeekers />);
-        break;
+      // case "4":
+      //   setSelectedComponent(<JobSeekers />);
+      //   break;
       case "5":
         setSelectedComponent(<PublicPostings />);
         break;
@@ -252,7 +253,7 @@ const EmployerDashboard = () => {
     { key: "1", icon: <DashboardOutlined />, label: "Dashboard" },
     { key: "2", icon: <PlusOutlined />, label: "Post a Job" },
     { key: "3", icon: <FileTextOutlined />, label: "Manage Jobs" },
-    { key: "4", icon: <UserOutlined />, label: "Job Seekers" },
+    // { key: "4", icon: <UserOutlined />, label: "Job Seekers" },
     { key: "5", icon: <UnlockOutlined />, label: "Public Postings" },
     { key: "6", icon: <LockOutlined />, label: "Private Postings" },
   ];
@@ -403,9 +404,9 @@ const EmployerDashboard = () => {
               style={{ marginRight: 1 }}
             />
           )}
-          <span style={{ fontSize: isMobile ? "12px" : "14px", fontWeight: "bold" }}>
+          {/* <span style={{ fontSize: isMobile ? "12px" : "14px", fontWeight: "bold" }}>
             Welcome, {auth.user ? auth.user.email : "Employer"}!
-          </span>
+          </span> */}
           <Button type="primary" onClick={handleLogout} style={{ width: isMobile ? "70px" : "80px", height: isMobile ? "30px" : "35px" }}>
             Logout
           </Button>

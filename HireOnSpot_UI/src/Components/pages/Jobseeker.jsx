@@ -12,6 +12,8 @@ import {
 import { Layout, Menu, theme, Button, Drawer, Grid } from "antd";
 import ViewJobs from "../JobseekerContent/ViewJobs";
 import DashBoardOverview from "../JobseekerContent/DashBoardOverview";
+import InterestedJobs from "../JobseekerContent/IntrestedJobs";
+import JobSeekerProfile from "../JobseekerContent/MyProfile";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { useBreakpoint } = Grid;
@@ -22,18 +24,18 @@ const JobseekerDashboard = () => (
     <p>View job listings and manage your profile.</p>
   </div>
 );
-const InterestedJobs = () => (
-  <div>
-    <h2>Interested Jobs</h2>
-    <p>Jobs you have marked as interested.</p>
-  </div>
-);
-const Profile = () => (
-  <div>
-    <h2>My Profile</h2>
-    <p>Update your profile information.</p>
-  </div>
-);
+// const InterestedJobs = () => (
+//   <div>
+//     <h2>Interested Jobs</h2>
+//     <p>Jobs you have marked as interested.</p>
+//   </div>
+// );
+// const Profile = () => (
+//   <div>
+//     <h2>My Profile</h2>
+//     <p>Update your profile information.</p>
+//   </div>
+// );
 
 const JobSeekerDashboard = () => {
   const {
@@ -67,7 +69,7 @@ const JobSeekerDashboard = () => {
         setSelectedComponent(<InterestedJobs />);
         break;
       case "4":
-        setSelectedComponent(<Profile />);
+        setSelectedComponent(<JobSeekerProfile />);
         break;
       default:
         setSelectedComponent(<JobseekerDashboard />);
@@ -231,9 +233,9 @@ const JobSeekerDashboard = () => {
               style={{ marginRight: 1 }}
             />
           )}
-          <span style={{ fontSize: isMobile ? "12px" : "14px", fontWeight: "bold" }}>
+          {/* <span style={{ fontSize: isMobile ? "12px" : "14px", fontWeight: "bold" }}>
             Welcome, {auth.user ? auth.user.email : "Job Seeker"}!
-          </span>
+          </span> */}
           <Button type="primary" onClick={handleLogout} style={{ width: isMobile ? "70px" : "80px", height: isMobile ? "30px" : "35px" }}>
             Logout
           </Button>

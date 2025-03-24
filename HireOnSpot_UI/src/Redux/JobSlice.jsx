@@ -2,17 +2,19 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
+const API_URL = `${baseUrl}api/jobs`; // Adjust if needed
 
-const API_URL = `${baseUrl}api/jobs`; // Adjust based on backend
+// Helper function for authentication headers
+const getAuthHeaders = () => ({
+  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+});
 
 // 1️⃣ Fetch Employer Jobs
 export const fetchJobs = createAsyncThunk(
   "jobs/fetchEmployerJobs",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const response = await axios.get(`${API_URL}/`, getAuthHeaders());
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to fetch jobs");
@@ -25,9 +27,7 @@ export const postJob = createAsyncThunk(
   "jobs/postJob",
   async (jobData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/`, jobData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const response = await axios.post(`${API_URL}/`, jobData, getAuthHeaders());
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to post job");
@@ -40,9 +40,7 @@ export const updateJob = createAsyncThunk(
   "jobs/updateJob",
   async ({ id, jobData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${API_URL}/${id}`, jobData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const response = await axios.put(`${API_URL}/${id}`, jobData, getAuthHeaders());
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to update job");
@@ -55,9 +53,7 @@ export const deleteJob = createAsyncThunk(
   "jobs/deleteJob",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${API_URL}/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      await axios.delete(`${API_URL}/${id}`, getAuthHeaders());
       return id; // Return deleted job ID to remove from state
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to delete job");
@@ -69,10 +65,20 @@ const jobSlice = createSlice({
   name: "jobs",
   initialState: {
     jobs: [],
+    interestedJobs: [],
     loading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    // ✅ Fix: Correct ID comparison
+    addInterestedJob: (state, action) => {
+      const job = action.payload;
+      const isAlreadyAdded = state.interestedJobs.some((j) => j.id === job.id);
+      if (!isAlreadyAdded) {
+        state.interestedJobs = [...state.interestedJobs, job]; // ✅ Correct immutable update
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Fetch Employer Jobs
@@ -111,7 +117,7 @@ const jobSlice = createSlice({
       .addCase(updateJob.fulfilled, (state, action) => {
         state.loading = false;
         state.jobs = state.jobs.map((job) =>
-          job._id === action.payload._id ? action.payload : job
+          job.id === action.payload.id ? action.payload : job
         );
       })
       .addCase(updateJob.rejected, (state, action) => {
@@ -126,7 +132,7 @@ const jobSlice = createSlice({
       })
       .addCase(deleteJob.fulfilled, (state, action) => {
         state.loading = false;
-        state.jobs = state.jobs.filter((job) => job._id !== action.payload);
+        state.jobs = state.jobs.filter((job) => job.id !== action.payload);
       })
       .addCase(deleteJob.rejected, (state, action) => {
         state.loading = false;
@@ -135,4 +141,5 @@ const jobSlice = createSlice({
   },
 });
 
+export const { addInterestedJob } = jobSlice.actions;
 export default jobSlice.reducer;

@@ -3,7 +3,7 @@ const db = require("../config/db")
 const findByEmail = async (email) => {
   try {
     const [rows] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
-    return rows[0]; // Return the first row (or undefined if not found)
+    return rows[0]; 
   } catch (error) {
     throw new Error("Error fetching user by email: " + error.message);
   }
@@ -24,7 +24,7 @@ const createUser = async (name, email, hashedPassword, role) => {
 const findAllUsers = async () => {
   try {
     const [rows] = await db.query("SELECT * FROM users");
-    return rows; // Return only the fetched data
+    return rows; 
   } catch (error) {
     throw new Error("Error fetching users: " + error.message);
   }
@@ -49,7 +49,6 @@ const updateUsers = async (userId, updatedData) => {
   }
 };
 
-// Delete user
 const deleteUsers = async (userId) => {
   try {
     const [result] = await db.query("DELETE FROM users WHERE id = ?", [userId]);

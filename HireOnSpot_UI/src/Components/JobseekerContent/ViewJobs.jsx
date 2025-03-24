@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchJobs } from "../../Redux/JobSlice";
+import { fetchJobs, addInterestedJob } from "../../Redux/JobSlice";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ViewJobs = () => {
   const dispatch = useDispatch();
@@ -10,11 +12,26 @@ const ViewJobs = () => {
     dispatch(fetchJobs());
   }, [dispatch]);
 
+  // ✅ Function to show toast notification
+  const handleInterestedClick = (job) => {
+    dispatch(addInterestedJob(job));
+    toast.success(`✅ You showed interest in "${job.title}"!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "colored",
+    });
+  };
+
   if (loading) return <p style={{ padding: "20px" }}>Loading jobs...</p>;
   if (error) return <p style={{ color: "red", padding: "20px" }}>{error}</p>;
 
   return (
     <div>
+      <ToastContainer /> {/* ✅ Toast Container for notifications */}
       <h2 style={{ padding: "24px 20px", color: "#1a73e8" }}>Available Jobs</h2>
       <div
         style={{
@@ -42,23 +59,15 @@ const ViewJobs = () => {
             >
               <h3 style={{ color: "#1a73e8" }}>{job.title}</h3>
               <p>{job.description}</p>
-              {/* ✅ Display Skills properly */}
               <p>
                 <strong>Skills:</strong>{" "}
                 {Array.isArray(job.requirements)
                   ? job.requirements.join(", ")
                   : job.requirements}
               </p>
-              <p>
-                <strong>Location:</strong> {job.location}
-              </p>
-              <p>
-                <strong>Salary:</strong> ₹{job.salary}
-              </p>
-              <p>
-                <strong>Mode:</strong> {job.mode}
-              </p>
-              {/* ✅ Display post date and time */}
+              <p><strong>Location:</strong> {job.location}</p>
+              <p><strong>Salary:</strong> ₹{job.salary}</p>
+              <p><strong>Mode:</strong> {job.mode}</p>
               <p>
                 <strong>Posted on:</strong>{" "}
                 {new Date(job.created_at).toLocaleString("en-US", {
@@ -81,9 +90,9 @@ const ViewJobs = () => {
                   cursor: "pointer",
                   transition: "background-color 0.2s",
                 }}
-                onClick={() => alert(`Applied for ${job.title}`)}
+                onClick={() => handleInterestedClick(job)}
               >
-                Intrested
+                Interested
               </button>
             </div>
           ))

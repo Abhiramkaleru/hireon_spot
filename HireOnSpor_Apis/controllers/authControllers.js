@@ -1,30 +1,25 @@
-// controllers/authController.js
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/userModels");
 require("dotenv").config();
 
-// Registration: Only job seekers can self-register (role forced to "job_seeker")
+// Registration
 exports.register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
-
-    // const role = "job_seeker"; // Force self-registered users as job seekers
 
     if (!name || !email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    // Check if user exists
     const existingUser = await UserModel.findByEmail(email);
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user in the database
     await UserModel.createUser(name, email, hashedPassword, role);
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
@@ -33,7 +28,7 @@ exports.register = async (req, res) => {
   }
 };
 
-// Login: Allow only job seekers (and guests) to log in
+// Login
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -53,7 +48,7 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Generate JWT token
+    // Generate JWT 
     const token = jwt.sign(
       { id: user.id, role: user.role },
       process.env.JWT_SECRET,
