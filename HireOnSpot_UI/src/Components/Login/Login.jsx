@@ -209,7 +209,7 @@ const Login = () => {
               className="form-select"
               value={guestRole}
               onChange={(e) => setGuestRole(e.target.value)}
-              style={{ borderRadius: '8px', background: 'rgba(255,255,255,0.2)', color: 'white', border: 'none' }}
+              style={{ borderRadius: '8px', background: 'rgba(13, 17, 54, 0.9)', color: '#ff9900', border: 'none' }}
             >
               <option value="job_seeker">Job Seeker</option>
               <option value="employer">Employer</option>

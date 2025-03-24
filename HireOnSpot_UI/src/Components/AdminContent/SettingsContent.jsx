@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
+import { Card, Typography } from "antd";
 
-function SettingsContent() {
+const { Title, Text } = Typography;
+
+const SettingsContent = () => {
   return (
-    <div>SettingsContent</div>
-  )
-}
+    <Card className="shadow-md rounded-lg p-6 text-center">
+      <Title level={3} style={{ color: "#004aad" }}>
+        Settings
+      </Title>
+      <Text type="secondary">This feature is coming soon. Stay tuned!</Text>
+    </Card>
+  );
+};
 
-export default SettingsContent
+export default SettingsContent;

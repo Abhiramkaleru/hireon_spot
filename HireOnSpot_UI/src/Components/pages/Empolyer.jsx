@@ -191,15 +191,27 @@ import {
 import { Layout, Menu, theme, Button, Grid, Drawer } from "antd";
 import JobPostingForm from "../EmployerContent/PostJob";
 import JobManager from "../EmployerContent/JobManager";
+import EmployerProfile from "../EmployerContent/EmployerProfile";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { useBreakpoint } = Grid;
 
-const Dashboard = () => <div><h2>Dashboard Overview</h2><p>This is where you'll manage job postings and track applicants.</p></div>;
+// const Dashboard = () => <div><h2>Dashboard Overview</h2><p>This is where you'll manage job postings and track applicants.</p></div>;
 // const ManageJobs = () => <div><h2>Manage Jobs</h2><p>View and manage your job listings.</p></div>;
 // const JobSeekers = () => <div><h2>Job Seekers</h2><p>Browse and interact with job seekers.</p></div>;
-const PublicPostings = () => <div><h2>Public Postings</h2><p>View public job postings.</p></div>;
-const PrivatePostings = () => <div><h2>Private Postings</h2><p>Manage private job postings.</p></div>;
+const PublicPostings = () => (
+  <div style={{ textAlign: "center", padding: "50px" }}>
+    <h2>Public Postings</h2>
+    <p>🚀 This feature is coming soon! Stay tuned.</p>
+  </div>
+);
+
+const PrivatePostings = () => (
+  <div style={{ textAlign: "center", padding: "50px" }}>
+    <h2>Private Postings</h2>
+    <p>🔧 This feature is under development. Coming soon!</p>
+  </div>
+);
 
 const EmployerDashboard = () => {
   const {
@@ -209,7 +221,7 @@ const EmployerDashboard = () => {
   const screens = useBreakpoint();
   const { logout, auth } = useContext(AuthContext);
   
-  const [selectedComponent, setSelectedComponent] = useState(<Dashboard />);
+  const [selectedComponent, setSelectedComponent] = useState(<EmployerProfile />);
   const [collapsed, setCollapsed] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   
@@ -222,7 +234,7 @@ const EmployerDashboard = () => {
   const handleMenuClick = ({ key }) => {
     switch (key) {
       case "1":
-        setSelectedComponent(<Dashboard />);
+        setSelectedComponent(<EmployerProfile />);
         break;
       case "2":
         setSelectedComponent(<JobPostingForm />);

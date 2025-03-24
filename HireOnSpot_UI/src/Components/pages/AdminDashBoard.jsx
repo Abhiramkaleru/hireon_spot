@@ -433,9 +433,9 @@ const AdminDashboard = () => {
           
           {/* User Info + Logout */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ fontSize: isMobile ? "12px" : "16px", fontWeight: "500" }}>
+            {/* <span style={{ fontSize: isMobile ? "12px" : "16px", fontWeight: "500" }}>
               {auth.user ? `Welcome, ${auth.user.email}` : 'Welcome, Admin'}
-            </span>
+            </span> */}
             <Button 
               type="primary" 
               onClick={handleLogout} 
