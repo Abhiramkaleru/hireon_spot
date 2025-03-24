@@ -1,0 +1,41 @@
+.flowing-container {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .flowing-row {
+    display: flex;
+    width: 200%; /* Two sets of logos */
+    animation: scroll 10s linear infinite; /* Adjust duration as needed */
+  }
+  
+  .logo-card {
+    padding: 10px;
+    /* Each logo takes 1/7th of the container */
+    flex: 0 0 calc(100% / 7);
+    max-width: calc(100% / 7);
+  }
+  
+  /* Responsive adjustments for mobile */
+  @media (max-width: 768px) {
+    /* If you still want 7 logos per row on mobile, keep the same.
+       Alternatively, change to 3 or 4 per row for better visibility */
+    .logo-card {
+      flex: 0 0 calc(100% / 4);
+      max-width: calc(100% / 4);
+    }
+    .flowing-row {
+      animation-duration: 15s; /* Adjust for mobile if needed */
+    }
+  }
+  
+  /* Keyframes: Scroll one complete set of 7 images out of view */
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  

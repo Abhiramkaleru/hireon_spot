@@ -13,17 +13,16 @@ import {
   Send,
   Award,
 } from "lucide-react";
+import  "../pages/Home.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ASCIIText from "../Animation/ASCII/AsciiText";
-// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-// import { Pie } from "react-chartjs-2";
 import bgImage from "../../assets/bg2.jpg";
-// ChartJS.register(ArcElement, Tooltip, Legend);
 import Particles from "../Animation/Partical/Partical";
 import SplashCursor from "../Animation/Splash/Splash";
+import Footer from "./Fotter";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -72,6 +71,12 @@ const Home = () => {
     { title: "Software Engineer", company: "Google", location: "Mountain View" },
   ];
 
+  const filteredJobs = jobListingsGrid.filter(
+    (job) =>
+      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.location.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div
@@ -311,39 +316,41 @@ const Home = () => {
         </header>
 
 
-
-        {/* Features Section */}
-        <section className="container-fluid py-5 bg-light">
-          <div className="row text-center g-4">
-            <div className="col-12 col-md-4 d-flex align-items-stretch">
-              <div className="card p-4 shadow-sm flex-fill d-flex flex-column justify-content-center">
-                <Search className="text-primary mb-3" size={32} />
-                <h5 className="fw-semibold">Instant Job Search</h5>
-                <p className="text-muted">
-                  Find verified walk-in jobs near you with real-time listings.
-                </p>
-              </div>
-            </div>
-            <div className="col-12 col-md-4 d-flex align-items-stretch">
-              <div className="card p-4 shadow-sm flex-fill d-flex flex-column justify-content-center">
-                <Briefcase className="text-primary mb-3" size={32} />
-                <h5 className="fw-semibold">Verified Employers</h5>
-                <p className="text-muted">
-                  Only approved and genuine companies can post job openings.
-                </p>
-              </div>
-            </div>
-            <div className="col-12 col-md-4 d-flex align-items-stretch">
-              <div className="card p-4 shadow-sm flex-fill d-flex flex-column justify-content-center">
-                <CheckCircle className="text-primary mb-3" size={32} />
-                <h5 className="fw-semibold">Easy Walk-in Applications</h5>
-                <p className="text-muted">
-                  Apply directly and get complete job details and interview locations.
-                </p>
+                 {/* Latest Jobs Section */}
+      <section className="container-fluid py-5 bg-light">
+        <div className="row justify-content-center">
+          <div className="col-lg-8 text-center mb-4">
+            <h2 className="fw-bold">Latest Jobs</h2>
+            <p className="text-muted">Explore the most recent walk-in job postings.</p>
+          </div>
+          <div className="marquee-container">
+            <div className="marquee">
+              <div className="row g-4 px-3">
+                {filteredJobs.length > 0 ? (
+                  filteredJobs.map((job, index) => (
+                    <div className="col-12 col-md-3 job-card" key={index}>
+                      <div className="card h-100 shadow-sm">
+                        <div className="card-body">
+                          <h6 className="card-title">{job.title}</h6>
+                          <p className="card-text small text-muted">
+                            {job.company} <br /> {job.location}
+                          </p>
+                          <button className="btn btn-outline-primary btn-sm">
+                            View Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-muted">No jobs found</p>
+                )}
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
+
 
         {/* How It Works Section */}
         <section className="container-fluid py-5 text-white" style={{background: "rgba(13, 17, 54, 0.9)"}}>
@@ -395,34 +402,36 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Latest Jobs Section */}
+  
+        
+        {/* Features Section */}
         <section className="container-fluid py-5 bg-light">
-          <div className="row justify-content-center">
-            <div className="col-lg-8 text-center mb-4">
-              <h2 className="fw-bold">Latest Jobs</h2>
-              <p className="text-muted">
-                Explore the most recent walk-in job postings.
-              </p>
+          <div className="row text-center g-4">
+            <div className="col-12 col-md-4 d-flex align-items-stretch">
+              <div className="card p-4 shadow-sm flex-fill d-flex flex-column justify-content-center">
+                <Search className="text-primary mb-3" size={32} />
+                <h5 className="fw-semibold">Instant Job Search</h5>
+                <p className="text-muted">
+                  Find verified walk-in jobs near you with real-time listings.
+                </p>
+              </div>
             </div>
-            <div className="marquee-container">
-              <div className="marquee">
-                <div className="row g-4 px-3">
-                  {jobListingsGrid.map((job, index) => (
-                    <div className="col-12 col-md-3 job-card" key={index}>
-                      <div className="card h-100 shadow-sm">
-                        <div className="card-body">
-                          <h6 className="card-title">{job.title}</h6>
-                          <p className="card-text small text-muted">
-                            {job.company} <br /> {job.location}
-                          </p>
-                          <button className="btn btn-outline-primary btn-sm">
-                            View Details
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+            <div className="col-12 col-md-4 d-flex align-items-stretch">
+              <div className="card p-4 shadow-sm flex-fill d-flex flex-column justify-content-center">
+                <Briefcase className="text-primary mb-3" size={32} />
+                <h5 className="fw-semibold">Verified Employers</h5>
+                <p className="text-muted">
+                  Only approved and genuine companies can post job openings.
+                </p>
+              </div>
+            </div>
+            <div className="col-12 col-md-4 d-flex align-items-stretch">
+              <div className="card p-4 shadow-sm flex-fill d-flex flex-column justify-content-center">
+                <CheckCircle className="text-primary mb-3" size={32} />
+                <h5 className="fw-semibold">Easy Walk-in Applications</h5>
+                <p className="text-muted">
+                  Apply directly and get complete job details and interview locations.
+                </p>
               </div>
             </div>
           </div>
@@ -494,9 +503,8 @@ const Home = () => {
             </div>
           </div>
         </section>
-
         {/* Featured Companies Section */}
-        <section className="container-fluid py-5 bg-white">
+        {/* <section className="container-fluid py-5 bg-white">
           <div className="row justify-content-center">
             <div className="col-lg-8 text-center">
               <h2 className="fw-bold mb-4">Featured Companies</h2>
@@ -523,118 +531,60 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
 
-        {/* Footer */}
-        <footer className="bg-dark text-white py-5">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-4">
-                <h5>
-                  <svg
-                    width="150"
-                    height="50"
-                    viewBox="0 0 400 100"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g>
-                      <text
-                        x="50"
-                        y="70"
-                        fontFamily="Arial"
-                        fontWeight="900"
-                        fontSize="40"
-                        fill="white"
-                      >
-                        HIRE
-                      </text>
-                      <circle cx="200" cy="60" r="30" fill="blue" />
-                      <text
-                        x="180"
-                        y="73"
-                        fontFamily="Arial"
-                        fontWeight="900"
-                        fontSize="40"
-                        fill="white"
-                      >
-                        ON
-                      </text>
-                      <text
-                        x="250"
-                        y="70"
-                        fontFamily="Arial"
-                        fontWeight="900"
-                        fontSize="40"
-                        fill="white"
-                      >
-                        SPOT
-                      </text>
-                      <path
-                        d="M320 45 C340 45, 340 75, 320 75"
-                        fill="none"
-                        stroke="#3b82f6"
-                        strokeWidth="4"
-                      />
-                      <path d="M315 70 L325 75 L315 80" fill="#3b82f6" />
-                    </g>
-                  </svg>
-                </h5>
-                <p className="text-muted">
-                  Connecting job seekers with verified employers for walk-in interviews.
-                </p>
-              </div>
-              <div className="col-md-4">
-                <h5>Quick Links</h5>
-                <ul className="list-unstyled">
-                  <li>
-                    <Link to="/" className="text-white">
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/jobs" className="text-white">
-                      Jobs
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/about" className="text-white">
-                      About Us
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/contact" className="text-white">
-                      Contact
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="col-md-4">
-                <h5>Follow Us</h5>
-                <ul className="list-unstyled">
-                  <li>
-                    <a href="#" className="text-white">
-                      Facebook
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-white">
-                      Twitter
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-white">
-                      LinkedIn
-                    </a>
-                  </li>
-                </ul>
-              </div>
+<section className="container-fluid py-5 bg-white">
+  <div className="row justify-content-center">
+    <div className="col-lg-8 text-center">
+      <h2 className="fw-bold mb-4">Featured Companies</h2>
+      <div className="flowing-container">
+        <div className="flowing-row">
+          {[
+            { name: "TCS", logo: "https://www.stottandmay.com/hubfs/TCS%20black%20logo.png" },
+            { name: "Wipro", logo: "https://logodix.com/logo/557216.png" },
+            { name: "Accenture", logo: "https://logos-world.net/wp-content/uploads/2020/06/Accenture-Symbol.png" },
+            { name: "IBM", logo: "https://pngimg.com/uploads/ibm/ibm_PNG19658.png" },
+            { name: "HCL", logo: "https://download.logo.wine/logo/HCL_Technologies/HCL_Technologies-Logo.wine.png" },
+            { name: "Capgemini", logo: "https://download.logo.wine/logo/Capgemini/Capgemini-Logo.wine.png" },
+            { name: "Genpact", logo: "https://awsmp-logos.s3.amazonaws.com/seller-da4cx2zwvsjos/78f24e2fe2e409aac4a8874999f2ff5b.png" },
+          ].map((company, index) => (
+            <div className="logo-card" key={index}>
+              <img
+                src={company.logo}
+                alt={company.name}
+                className="img-fluid"
+                style={{ height: "100px", maxWidth: "100%" }}
+              />
             </div>
-            <div className="text-center mt-4">
-              <p className="mb-0">&copy; 2025 HireOnSpot. All Rights Reserved.</p>
+          ))}
+          {/* Duplicate the set */}
+          {[
+            { name: "TCS", logo: "https://www.stottandmay.com/hubfs/TCS%20black%20logo.png" },
+            { name: "Wipro", logo: "https://logodix.com/logo/557216.png" },
+            { name: "Accenture", logo: "https://logos-world.net/wp-content/uploads/2020/06/Accenture-Symbol.png" },
+            { name: "IBM", logo: "https://pngimg.com/uploads/ibm/ibm_PNG19658.png" },
+            { name: "HCL", logo: "https://download.logo.wine/logo/HCL_Technologies/HCL_Technologies-Logo.wine.png" },
+            { name: "Capgemini", logo: "https://download.logo.wine/logo/Capgemini/Capgemini-Logo.wine.png" },
+            { name: "Genpact", logo: "https://awsmp-logos.s3.amazonaws.com/seller-da4cx2zwvsjos/78f24e2fe2e409aac4a8874999f2ff5b.png" },
+          ].map((company, index) => (
+            <div className="logo-card" key={`dup-${index}`}>
+              <img
+                src={company.logo}
+                alt={company.name}
+                className="img-fluid"
+                style={{ height: "100px", maxWidth: "100%" }}
+              />
             </div>
-          </div>
-        </footer>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+        <Footer/>
       </div>
     </div>
   );
