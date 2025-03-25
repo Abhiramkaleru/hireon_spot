@@ -9,7 +9,7 @@ import EmployerDashboard from './Components/pages/Empolyer';
 import AdminDashboard from './Components/pages/AdminDashBoard';
 import JobSeekerDashboard from './Components/pages/Jobseeker'
 import ProtectedRoute from './Components/ProtectedRoute';
-import "./app.css";
+import "./App.css";
 const App = () => {
   return (
 
