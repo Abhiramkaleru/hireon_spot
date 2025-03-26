@@ -2,11 +2,11 @@ const db = require('../config/db');
 
 const Job = {
   // Create Job
-  async createJob(employerId, title, description, salary, location, requirements, mode) {
+  async createJob(employerId, title, description, salary, location, requirements, mode, hrName, companyName, hrLinkedin, companyLinkedin, hiringTeamLinkedin) {
     const [result] = await db.query(
-      `INSERT INTO jobs (employer_id, title, description, salary, location, requirements, mode) 
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [employerId, title, description, salary, location, requirements, mode]
+      `INSERT INTO jobs (employer_id, title, description, salary, location, requirements, mode, hr_name, company_name, hr_linkedin, company_linkedin, hiring_team_linkedin) 
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [employerId, title, description, salary, location, requirements, mode, hrName, companyName, hrLinkedin, companyLinkedin, hiringTeamLinkedin]
     );
     return result.insertId;
   },
@@ -24,12 +24,12 @@ const Job = {
   },
 
   // Update Job
-  async updateJob(id, title, description, salary, location, requirements, mode) {
+  async updateJob(id, title, description, salary, location, requirements, mode, hrName, companyName, hrLinkedin, companyLinkedin, hiringTeamLinkedin) {
     await db.query(
       `UPDATE jobs 
-       SET title = ?, description = ?, salary = ?, location = ?, requirements = ?, mode = ?
+       SET title = ?, description = ?, salary = ?, location = ?, requirements = ?, mode = ?, hr_name = ?, company_name = ?, hr_linkedin = ?, company_linkedin = ?, hiring_team_linkedin = ?
        WHERE id = ?`,
-      [title, description, salary, location, requirements, mode, id]
+      [title, description, salary, location, requirements, mode, hrName, companyName, hrLinkedin, companyLinkedin, hiringTeamLinkedin, id]
     );
   },
 

@@ -3,10 +3,10 @@ const Job = require('../models/jobModel');
 // Create Job
 const createJob = async (req, res) => {
   try {
-    const { title, description, salary, location, requirements, mode } = req.body;
+    const { title, description, salary, location, requirements, mode, hr_name, company_name, hr_linkedin, company_linkedin, hiring_team_linkedin } = req.body;
 
-    if (!title || !description || !salary || !location || !requirements) {
-      return res.status(400).json({ message: 'All fields are required' });
+    if (!title || !description || !salary || !location || !requirements || !hr_name || !company_name) {
+      return res.status(400).json({ message: 'All required fields must be provided' });
     }
 
     const jobId = await Job.createJob(
@@ -16,7 +16,12 @@ const createJob = async (req, res) => {
       salary,
       location,
       requirements,
-      mode
+      mode,
+      hr_name,
+      company_name,
+      hr_linkedin,
+      company_linkedin,
+      hiring_team_linkedin
     );
 
     res.status(201).json({ message: 'Job posted successfully', jobId });
@@ -26,7 +31,7 @@ const createJob = async (req, res) => {
   }
 };
 
-//Get All Jobs
+// Get All Jobs
 const getJobs = async (req, res) => {
   try {
     const jobs = await Job.getAllJobs();
@@ -37,7 +42,7 @@ const getJobs = async (req, res) => {
   }
 };
 
-//Single Job By ID
+// Get Single Job By ID
 const getJobById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -54,11 +59,11 @@ const getJobById = async (req, res) => {
   }
 };
 
-// Update Job 
+// Update Job
 const updateJob = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, salary, location, requirements, mode } = req.body;
+    const { title, description, salary, location, requirements, mode, hr_name, company_name, hr_linkedin, company_linkedin, hiring_team_linkedin } = req.body;
 
     const job = await Job.getJobById(id);
     if (!job) {
@@ -69,7 +74,7 @@ const updateJob = async (req, res) => {
       return res.status(403).json({ message: 'Unauthorized to update this job' });
     }
 
-    await Job.updateJob(id, title, description, salary, location, requirements, mode);
+    await Job.updateJob(id, title, description, salary, location, requirements, mode, hr_name, company_name, hr_linkedin, company_linkedin, hiring_team_linkedin);
 
     res.status(200).json({ message: 'Job updated successfully' });
   } catch (error) {
@@ -78,7 +83,7 @@ const updateJob = async (req, res) => {
   }
 };
 
-//Delete Job 
+// Delete Job
 const deleteJob = async (req, res) => {
   try {
     const { id } = req.params;

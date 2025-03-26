@@ -83,7 +83,7 @@ const JobSeekerDashboard = () => {
   const menuItems = [
     { key: "1", icon: <DashboardOutlined />, label: "Dashboard" },
     { key: "2", icon: <EyeOutlined />, label: "View Jobs" },
-    { key: "3", icon: <HeartOutlined />, label: "Interested Jobs" },
+    { key: "3", icon: <HeartOutlined />, label: "Saved Jobs" },
     { key: "4", icon: <UserOutlined />, label: "Profile" },
   ];
 
