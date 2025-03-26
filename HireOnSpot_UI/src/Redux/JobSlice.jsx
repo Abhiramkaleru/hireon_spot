@@ -67,7 +67,7 @@ export const fetchInterestedJobs = createAsyncThunk(
   "jobs/fetchInterestedJobs",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(INTERESTED_API_URL, getAuthHeaders() );
+      const response = await axios.get(INTERESTED_API_URL, getAuthHeaders());
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to fetch interested jobs");
@@ -78,12 +78,10 @@ export const fetchInterestedJobs = createAsyncThunk(
 // Add Interested Job
 export const addInterestedJob = createAsyncThunk(
   "jobs/addInterestedJob",
-  async (job_id, { rejectWithValue }) => {
+  async (job, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        INTERESTED_API_URL,
-        { job_id },
-       getAuthHeaders() 
+        INTERESTED_API_URL, { job_id: job.id }, getAuthHeaders()
       );
       return response.data;
     } catch (error) {
@@ -106,11 +104,26 @@ export const removeInterestedJob = createAsyncThunk(
 );
 
 
+export const fetchInterestedCount = createAsyncThunk(
+  "jobs/fetchInterestedCount",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${INTERESTED_API_URL}/count`);
+      return data.interested_count;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch interested count"
+      );
+    }
+  }
+);
+
 const jobSlice = createSlice({
   name: "jobs",
   initialState: {
     jobs: [],
     interestedJobs: [],
+    interestedCount: 0,
     loading: false,
     error: null,
   },
@@ -177,7 +190,7 @@ const jobSlice = createSlice({
         state.error = action.payload;
       })
 
-       // Fetch Interested Jobs
+      // Fetch Interested Jobs
       .addCase(fetchInterestedJobs.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -220,6 +233,18 @@ const jobSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      .addCase(fetchInterestedCount.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchInterestedCount.fulfilled, (state, action) => {
+        state.loading = false;
+        state.interestedCount = action.payload;
+      })
+      .addCase(fetchInterestedCount.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 export default jobSlice.reducer;

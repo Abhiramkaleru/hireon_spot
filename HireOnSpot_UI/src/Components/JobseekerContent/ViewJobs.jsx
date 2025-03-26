@@ -174,7 +174,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchJobs, addInterestedJob,fetchInterestedJobs} from "../../Redux/JobSlice";
+import { fetchJobs,fetchInterestedJobs,addInterestedJob} from "../../Redux/JobSlice";
 import { Modal, Button } from "antd";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -262,7 +262,7 @@ const ViewJobs = () => {
 
             return (
               <div
-                key={job._id}
+                key={job.id}
                 style={{
                   border: "1px solid #ddd",
                   padding: "16px",

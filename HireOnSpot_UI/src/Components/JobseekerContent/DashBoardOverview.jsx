@@ -1,15 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Card, Progress, Button, Typography, Row, Col } from "antd";
-import { UserOutlined, SaveOutlined, FileDoneOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { UserOutlined, SaveOutlined, FileDoneOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import { AuthContext } from "../../contexts/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchInterestedCount } from "../../Redux/JobSlice";
 
 const { Title, Text } = Typography;
 
 const DashBoardOverview = () => {
   const { auth } = useContext(AuthContext);
+  const dispatch = useDispatch();
 
-  // Sample Data (Replace with API call if needed)
+  // Using the correct property name from Redux state (adjust as necessary)
+  const { interestedCount } = useSelector((state) => state.jobs);
+
+  useEffect(() => {
+    // Dispatch the thunk to fetch the saved (interested) count on mount
+    dispatch(fetchInterestedCount());
+  }, [dispatch]);
+
+  // Sample data (replace with API call if needed)
   const profile = {
     name: auth?.user?.name || "Job Seeker",
     appliedJobs: 5,
@@ -57,11 +68,13 @@ const DashBoardOverview = () => {
             </Card.Grid>
           </Col>
 
-          {/* Saved Jobs */}
+          {/* Saved Jobs (Interested Count) */}
           <Col xs={24} sm={12} md={8}>
             <Card.Grid style={getGridStyle(isMobile)}>
               <SaveOutlined style={getIconStyle(isMobile, "#fa8c16")} />
-              <Title level={isMobile ? 5 : 4}>{profile.savedJobs}</Title>
+              <Title level={isMobile ? 5 : 4}>
+                {interestedCount}
+              </Title>
               <Text>Saved Jobs</Text>
             </Card.Grid>
           </Col>

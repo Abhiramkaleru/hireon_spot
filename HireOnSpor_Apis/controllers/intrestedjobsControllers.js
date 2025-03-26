@@ -44,4 +44,17 @@ exports.removeInterestedJob = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
+
 };
+
+exports.getInterestedCountByUser = async (req, res) => {
+    try {
+      // Assume your authentication middleware attaches the user to req.user
+      const user_id = req.user.id;
+      const count = await InterestedJob.getInterestedCountByUser(user_id);
+      res.status(200).json({ interested_count: count });
+    } catch (error) {
+      console.error("Error retrieving interested count:", error);
+      res.status(500).json({ message: "Error retrieving interested count", error: error.message });
+    }
+  };

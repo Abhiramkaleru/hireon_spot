@@ -20,7 +20,6 @@ const InterestedJobs = () => {
       }
     });
   };
-  console.log(interestedJobs)
 
   return (
     <div>
