@@ -65,7 +65,7 @@ const InterestedJobs = () => {
                   cursor: "pointer",
                   transition: "background-color 0.2s",
                 }}
-                onClick={() => handleRemoveInterest(job_id)}
+                onClick={() => handleRemoveInterest(job.id)}
               >
                 ❌ Remove
               </button>

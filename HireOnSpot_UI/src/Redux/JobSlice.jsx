@@ -67,7 +67,7 @@ export const fetchInterestedJobs = createAsyncThunk(
   "jobs/fetchInterestedJobs",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(INTERESTED_API_URL, { headers: getAuthHeaders() });
+      const response = await axios.get(INTERESTED_API_URL, getAuthHeaders() );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to fetch interested jobs");
@@ -83,7 +83,7 @@ export const addInterestedJob = createAsyncThunk(
       const response = await axios.post(
         INTERESTED_API_URL,
         { job_id },
-        { headers: getAuthHeaders() }
+       getAuthHeaders() 
       );
       return response.data;
     } catch (error) {
@@ -97,7 +97,7 @@ export const removeInterestedJob = createAsyncThunk(
   "jobs/removeInterestedJob",
   async (job_id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${INTERESTED_API_URL}/${job_id}`, { headers: getAuthHeaders() });
+      await axios.delete(`${INTERESTED_API_URL}/${job_id}`, getAuthHeaders());
       return job_id; // Fixed: Correctly returning `job_id`
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to remove job");

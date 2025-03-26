@@ -16,7 +16,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/admin",adminRoutes);
 app.use("/api/jobs",jobsRoutes)
-app.use("/api/intrested",interestedjobs)
+app.use("/api/interested",interestedjobs)
 app.get("/",(req,res)=>{
     res.send("ROOT API IS WORINKING")
 })

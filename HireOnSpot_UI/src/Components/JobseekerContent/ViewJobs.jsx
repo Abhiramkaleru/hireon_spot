@@ -188,7 +188,7 @@ const ViewJobs = () => {
 
   useEffect(() => {
     dispatch(fetchJobs());
-    dispatch(fetchInterestedJobs()); // Fetch user's interested jobs
+    dispatch(fetchInterestedJobs()); 
   }, [dispatch]);
   
 
