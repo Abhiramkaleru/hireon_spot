@@ -174,7 +174,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchJobs, addInterestedJob } from "../../Redux/JobSlice";
+import { fetchJobs, addInterestedJob,fetchInterestedJobs} from "../../Redux/JobSlice";
 import { Modal, Button } from "antd";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -184,11 +184,13 @@ const ViewJobs = () => {
   const { jobs, loading, error } = useSelector((state) => state.jobs);
   const [selectedJob, setSelectedJob] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [countdowns, setCountdowns] = useState({}); // Store countdowns
+  const [countdowns, setCountdowns] = useState({}); 
 
   useEffect(() => {
     dispatch(fetchJobs());
+    dispatch(fetchInterestedJobs()); // Fetch user's interested jobs
   }, [dispatch]);
+  
 
   useEffect(() => {
     const updateCountdowns = () => {
@@ -223,7 +225,7 @@ const ViewJobs = () => {
   }, [jobs]);
 
   const handleInterestedClick = (job) => {
-    dispatch(addInterestedJob(job));
+    dispatch(addInterestedJob(job.id));
     toast.success(`✅ You showed interest in "${job.title}"!`, {
       position: "top-right",
       autoClose: 3000,

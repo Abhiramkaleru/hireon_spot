@@ -2,8 +2,9 @@
 const express = require("express");
 const cors = require("cors");
 const authRoutes  = require("./routes/authRoutes");
-const adminRoutes=require("./routes/adminRoutes")
-const jobsRoutes=require("./routes/jobRoutes")
+const adminRoutes = require("./routes/adminRoutes")
+const jobsRoutes = require("./routes/jobRoutes")
+const interestedjobs = require("./routes/intrestedjobsRoutes")
 require("dotenv").config();
 
 const app = express();
@@ -14,7 +15,8 @@ app.use(express.json());
 // API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/admin",adminRoutes);
-app.use('/api/jobs',jobsRoutes)
+app.use("/api/jobs",jobsRoutes)
+app.use("/api/intrested",interestedjobs)
 app.get("/",(req,res)=>{
     res.send("ROOT API IS WORINKING")
 })

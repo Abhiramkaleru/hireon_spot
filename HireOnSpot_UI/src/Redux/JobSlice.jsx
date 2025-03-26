@@ -2,7 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
-const API_URL = `${baseUrl}api/jobs`; // Adjust if needed
+const API_URL = `${baseUrl}api/jobs`;
+const INTERESTED_API_URL = `http://localhost:5000/api/intrested/`;
+// const INTERESTED_API_URL = `${baseUrl}api/interested`;
 
 // Helper function for authentication headers
 const getAuthHeaders = () => ({
@@ -61,6 +63,45 @@ export const deleteJob = createAsyncThunk(
   }
 );
 
+// Fetch Interested Jobs
+export const fetchInterestedJobs = createAsyncThunk(
+  "jobs/fetchInterestedJobs",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${INTERESTED_API_URL}`, getAuthHeaders());
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch interested jobs");
+    }
+  }
+);
+
+// Add Interested Job
+export const addInterestedJob = createAsyncThunk(
+  "jobs/addInterestedJob",
+  async (job, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${INTERESTED_API_URL}`, { jobId: job.id }, getAuthHeaders());
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Failed to save job");
+    }
+  }
+);
+
+// Remove Interested Job
+export const removeInterestedJob = createAsyncThunk(
+  "jobs/removeInterestedJob",
+  async (jobId, { rejectWithValue }) => {
+    try {
+      await axios.delete(`${INTERESTED_API_URL}/${jobId}`, getAuthHeaders());
+      return jobId;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Failed to remove job");
+    }
+  }
+);
+
 const jobSlice = createSlice({
   name: "jobs",
   initialState: {
@@ -70,14 +111,7 @@ const jobSlice = createSlice({
     error: null,
   },
   reducers: {
-    // ✅ Fix: Correct ID comparison
-    addInterestedJob: (state, action) => {
-      const job = action.payload;
-      const isAlreadyAdded = state.interestedJobs.some((j) => j.id === job.id);
-      if (!isAlreadyAdded) {
-        state.interestedJobs = [...state.interestedJobs, job]; // ✅ Correct immutable update
-      }
-    },
+
   },
   extraReducers: (builder) => {
     builder
@@ -137,9 +171,53 @@ const jobSlice = createSlice({
       .addCase(deleteJob.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+
+       // Fetch Interested Jobs
+      .addCase(fetchInterestedJobs.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchInterestedJobs.fulfilled, (state, action) => {
+        state.loading = false;
+        state.interestedJobs = action.payload;
+      })
+      .addCase(fetchInterestedJobs.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Add Interested Job
+      .addCase(addInterestedJob.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addInterestedJob.fulfilled, (state, action) => {
+        state.loading = false;
+        state.interestedJobs.push(action.payload);
+      })
+      .addCase(addInterestedJob.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Remove Interested Job
+      .addCase(removeInterestedJob.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(removeInterestedJob.fulfilled, (state, action) => {
+        state.loading = false;
+        state.interestedJobs = state.interestedJobs.filter(
+          (job) => job.id !== action.payload
+        );
+      })
+      .addCase(removeInterestedJob.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 
-export const { addInterestedJob } = jobSlice.actions;
+// export const { addInterestedJob } = jobSlice.actions;
 export default jobSlice.reducer;
