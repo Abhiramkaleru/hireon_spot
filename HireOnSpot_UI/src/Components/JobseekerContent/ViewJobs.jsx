@@ -225,7 +225,7 @@ const ViewJobs = () => {
   }, [jobs]);
 
   const handleInterestedClick = (job) => {
-    dispatch(addInterestedJob(job.id));
+    dispatch(addInterestedJob(job));
     toast.success(`✅ You showed interest in "${job.title}"!`, {
       position: "top-right",
       autoClose: 3000,

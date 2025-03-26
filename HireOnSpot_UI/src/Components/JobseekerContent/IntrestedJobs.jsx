@@ -11,8 +11,8 @@ const InterestedJobs = () => {
     dispatch(fetchInterestedJobs());
   }, [dispatch]);
 
-  const handleRemoveInterest = (jobId) => {
-    dispatch(removeInterestedJob(jobId)).then((res) => {
+  const handleRemoveInterest = (job_id) => {
+    dispatch(removeInterestedJob(job_id)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         toast.info("❌ Removed from Interested Jobs!");
       } else {
@@ -20,6 +20,7 @@ const InterestedJobs = () => {
       }
     });
   };
+  console.log(interestedJobs)
 
   return (
     <div>
@@ -35,7 +36,7 @@ const InterestedJobs = () => {
         <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
           {interestedJobs.map((job) => (
             <li
-              key={job._id}
+              key={job.id}
               style={{
                 border: "1px solid #ddd",
                 padding: "10px",
@@ -64,7 +65,7 @@ const InterestedJobs = () => {
                   cursor: "pointer",
                   transition: "background-color 0.2s",
                 }}
-                onClick={() => handleRemoveInterest(job._id)}
+                onClick={() => handleRemoveInterest(job_id)}
               >
                 ❌ Remove
               </button>

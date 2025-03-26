@@ -3,8 +3,7 @@ import axios from "axios";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const API_URL = `${baseUrl}api/jobs`;
-const INTERESTED_API_URL = `http://localhost:5000/api/intrested/`;
-// const INTERESTED_API_URL = `${baseUrl}api/interested`;
+const INTERESTED_API_URL = `${baseUrl}api/interested`;
 
 // Helper function for authentication headers
 const getAuthHeaders = () => ({
@@ -68,7 +67,7 @@ export const fetchInterestedJobs = createAsyncThunk(
   "jobs/fetchInterestedJobs",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${INTERESTED_API_URL}`, getAuthHeaders());
+      const response = await axios.get(INTERESTED_API_URL, { headers: getAuthHeaders() });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to fetch interested jobs");
@@ -79,9 +78,13 @@ export const fetchInterestedJobs = createAsyncThunk(
 // Add Interested Job
 export const addInterestedJob = createAsyncThunk(
   "jobs/addInterestedJob",
-  async (job, { rejectWithValue }) => {
+  async (job_id, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${INTERESTED_API_URL}`, { jobId: job.id }, getAuthHeaders());
+      const response = await axios.post(
+        INTERESTED_API_URL,
+        { job_id },
+        { headers: getAuthHeaders() }
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to save job");
@@ -92,15 +95,16 @@ export const addInterestedJob = createAsyncThunk(
 // Remove Interested Job
 export const removeInterestedJob = createAsyncThunk(
   "jobs/removeInterestedJob",
-  async (jobId, { rejectWithValue }) => {
+  async (job_id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${INTERESTED_API_URL}/${jobId}`, getAuthHeaders());
-      return jobId;
+      await axios.delete(`${INTERESTED_API_URL}/${job_id}`, { headers: getAuthHeaders() });
+      return job_id; // Fixed: Correctly returning `job_id`
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to remove job");
     }
   }
 );
+
 
 const jobSlice = createSlice({
   name: "jobs",
@@ -218,6 +222,4 @@ const jobSlice = createSlice({
       })
   },
 });
-
-// export const { addInterestedJob } = jobSlice.actions;
 export default jobSlice.reducer;
