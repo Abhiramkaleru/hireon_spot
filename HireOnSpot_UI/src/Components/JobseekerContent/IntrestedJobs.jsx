@@ -14,7 +14,7 @@ const InterestedJobs = () => {
   const handleRemoveInterest = (job_id) => {
     dispatch(removeInterestedJob(job_id)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        toast.info("❌ Removed from Interested Jobs!");
+        toast.info("Removed from Interested Jobs!");
       } else {
         toast.error("⚠️ Failed to remove job!");
       }

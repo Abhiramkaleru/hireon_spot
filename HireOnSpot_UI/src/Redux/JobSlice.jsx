@@ -108,7 +108,7 @@ export const fetchInterestedCount = createAsyncThunk(
   "jobs/fetchInterestedCount",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${INTERESTED_API_URL}/count`);
+      const { data } = await axios.get(`${INTERESTED_API_URL}/count`,getAuthHeaders());
       return data.interested_count;
     } catch (error) {
       return rejectWithValue(

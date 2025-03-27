@@ -8,8 +8,15 @@ const interestedjobs = require("./routes/intrestedjobsRoutes")
 require("dotenv").config();
 
 const app = express();
+// app.use(cors());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://hireon-spot.onrender.com", "http://localhost:5000"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 // API Routes
