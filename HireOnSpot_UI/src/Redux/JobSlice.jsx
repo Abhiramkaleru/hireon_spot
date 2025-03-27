@@ -3,8 +3,8 @@ import axios from "axios";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const API_URL = `${baseUrl}api/jobs`;
-// const INTERESTED_API_URL = `${baseUrl}api/interested`;
-const INTERESTED_API_URL = `localhost:5000/api/interested`;
+const INTERESTED_API_URL = `${baseUrl}api/interested`;
+
 
 // Helper function for authentication headers
 const getAuthHeaders = () => ({
