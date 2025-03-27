@@ -3,7 +3,8 @@ import axios from "axios";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const API_URL = `${baseUrl}api/jobs`;
-const INTERESTED_API_URL = `${baseUrl}api/interested`;
+// const INTERESTED_API_URL = `${baseUrl}api/interested`;
+const INTERESTED_API_URL = `localhost:5000/api/interested`;
 
 // Helper function for authentication headers
 const getAuthHeaders = () => ({
@@ -81,7 +82,7 @@ export const addInterestedJob = createAsyncThunk(
   async (job, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        INTERESTED_API_URL, { job_id: job.id }, getAuthHeaders()
+        INTERESTED_API_URL,{ job_id: job.id }, getAuthHeaders()
       );
       return response.data;
     } catch (error) {

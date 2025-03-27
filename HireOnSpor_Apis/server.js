@@ -11,11 +11,11 @@ const app = express();
 // app.use(cors());
 
 app.use(
-  cors({
-    origin: ["https://hireon-spot.onrender.com", "http://localhost:5000"],
-    credentials: true,
-  })
-);
+    cors({
+      origin: [ "http://localhost:5173"],
+      credentials: true,
+    })
+  );
 
 app.use(express.json());
 

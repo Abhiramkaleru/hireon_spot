@@ -24,18 +24,6 @@ const JobseekerDashboard = () => (
     <p>View job listings and manage your profile.</p>
   </div>
 );
-// const InterestedJobs = () => (
-//   <div>
-//     <h2>Interested Jobs</h2>
-//     <p>Jobs you have marked as interested.</p>
-//   </div>
-// );
-// const Profile = () => (
-//   <div>
-//     <h2>My Profile</h2>
-//     <p>Update your profile information.</p>
-//   </div>
-// );
 
 const JobSeekerDashboard = () => {
   const {
