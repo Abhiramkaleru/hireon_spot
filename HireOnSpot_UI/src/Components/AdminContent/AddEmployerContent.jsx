@@ -93,10 +93,10 @@ function AddEmployerContent() {
   return (
     <div className="w-full max-w-md mx-auto px-4">
       <h2 className="text-2xl font-bold mb-6">Add New Employer</h2>
-      
+
       {error && <Alert message={error} type="error" className="mb-4" />}
       {success && <Alert message="Employer added successfully!" type="success" className="mb-4" />}
-      
+
       <Form
         name="addEmployer"
         layout="vertical"
@@ -156,6 +156,14 @@ function AddEmployerContent() {
             htmlType="submit"
             className="w-full"
             disabled={loading}
+            style={
+              {
+                borderColor: "#FF8541",
+                background: "linear-gradient(90deg, #ff8541 0%,rgb(0, 0, 0) 100%)",
+                border: "none",
+                color: "white",
+              }
+            }
           >
             {loading ? <Spin size="small" /> : "Add Employer"}
           </Button>

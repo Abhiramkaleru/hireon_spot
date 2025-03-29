@@ -171,10 +171,9 @@
 
 
 
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchJobs,fetchInterestedJobs,addInterestedJob} from "../../Redux/JobSlice";
+import { fetchJobs, fetchInterestedJobs, addInterestedJob } from "../../Redux/JobSlice";
 import { Modal, Button } from "antd";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -184,13 +183,12 @@ const ViewJobs = () => {
   const { jobs, loading, error } = useSelector((state) => state.jobs);
   const [selectedJob, setSelectedJob] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [countdowns, setCountdowns] = useState({}); 
+  const [countdowns, setCountdowns] = useState({});
 
   useEffect(() => {
     dispatch(fetchJobs());
-    dispatch(fetchInterestedJobs()); 
+    dispatch(fetchInterestedJobs());
   }, [dispatch]);
-  
 
   useEffect(() => {
     const updateCountdowns = () => {
@@ -200,7 +198,7 @@ const ViewJobs = () => {
       jobs.forEach((job) => {
         const createdAt = new Date(job.created_at);
         const expiryDate = new Date(createdAt);
-        expiryDate.setDate(expiryDate.getDate() + 7); // Job expires after 7 days
+        expiryDate.setDate(expiryDate.getDate() + 7);
 
         const timeLeft = expiryDate - now;
 
@@ -218,8 +216,8 @@ const ViewJobs = () => {
       setCountdowns(newCountdowns);
     };
 
-    updateCountdowns(); // Initial call
-    const interval = setInterval(updateCountdowns, 1000); // Update every second
+    updateCountdowns();
+    const interval = setInterval(updateCountdowns, 1000);
 
     return () => clearInterval(interval);
   }, [jobs]);
@@ -245,7 +243,8 @@ const ViewJobs = () => {
   return (
     <div>
       <ToastContainer />
-      <h2 style={{ padding: "24px 20px", color: "#1a73e8" }}>Available Jobs</h2>
+      <h2 style={{ padding: "24px 20px", color: "#FF8541", textAlign: "center" }}>Available Jobs</h2>
+
       <div
         style={{
           display: "grid",
@@ -255,7 +254,7 @@ const ViewJobs = () => {
         }}
       >
         {jobs.length === 0 ? (
-          <p>No jobs available.</p>
+          <p style={{ color: "#000", textAlign: "center" }}>No jobs available.</p>
         ) : (
           jobs.map((job) => {
             const isExpired = countdowns[job.id] === "Expired";
@@ -267,15 +266,15 @@ const ViewJobs = () => {
                   border: "1px solid #ddd",
                   padding: "16px",
                   borderRadius: "8px",
-                  backgroundColor: "#f9f9f9",
+                  backgroundColor: "#fff",
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                   transition: "transform 0.2s ease-in-out",
                   cursor: "pointer",
                 }}
               >
-                <h3 style={{ color: "#1a73e8" }}>{job.company_name}</h3>
-                <h3 style={{ color: "#1a73e8" }}>{job.title}</h3>
-                <p>{job.description}</p>
+                <h3 style={{ color: "#FF8541" }}>{job.company_name}</h3>
+                <h3 style={{ color: "#000" }}>{job.title}</h3>
+                <p style={{ color: "#000" }}>{job.description}</p>
                 <p><strong>Skills:</strong> {Array.isArray(job.requirements) ? job.requirements.join(", ") : job.requirements}</p>
                 <p><strong>Location:</strong> {job.location}</p>
                 <p><strong>Salary:</strong> ₹{job.salary}</p>
@@ -291,15 +290,14 @@ const ViewJobs = () => {
                   hour12: true,
                 })}</p>
 
-                {/* Countdown Timer */}
-                <p style={{ fontWeight: "bold", color: isExpired ? "red" : "#28a745" }}>
+                <p style={{ fontWeight: "bold", color: isExpired ? "#e63946" : "#FF8541" }}>
                   {countdowns[job.id] || "Calculating..."}
                 </p>
 
                 <button
                   style={{
                     marginTop: "10px",
-                    backgroundColor: "#1a73e8",
+                    backgroundColor: "#FF8541",
                     color: "#fff",
                     border: "none",
                     padding: "8px 16px",
@@ -307,6 +305,8 @@ const ViewJobs = () => {
                     cursor: "pointer",
                     transition: "background-color 0.2s",
                   }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#e06a27")}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#FF8541")}
                   onClick={() => handleInterestedClick(job)}
                 >
                   Save Now
@@ -315,7 +315,7 @@ const ViewJobs = () => {
                 <button
                   style={{
                     margin: "10px",
-                    backgroundColor: isExpired ? "#e63946" : "#28a745",
+                    backgroundColor: isExpired ? "#e63946" : "#000",
                     color: "#fff",
                     border: "none",
                     padding: "8px 16px",
@@ -323,7 +323,7 @@ const ViewJobs = () => {
                     cursor: isExpired ? "not-allowed" : "pointer",
                     transition: "background-color 0.2s",
                     opacity: isExpired ? 0.6 : 1,
-                  }}  
+                  }}
                   onClick={() => !isExpired && handleViewDetails(job)}
                   disabled={isExpired}
                 >

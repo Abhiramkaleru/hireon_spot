@@ -5,15 +5,15 @@
   
   .flowing-row {
     display: flex;
-    width: 200%; /* Two sets of logos */
-    animation: scroll 10s linear infinite; /* Adjust duration as needed */
+    width: 100vw; /* Two sets of logos */
+    animation: scroll 20s linear infinite; /* Adjust duration as needed */
   }
   
   .logo-card {
     padding: 10px;
     /* Each logo takes 1/7th of the container */
-    flex: 0 0 calc(100% / 7);
-    max-width: calc(100% / 7);
+    flex: 0 0 calc(100% / 6);
+    max-width: calc(100% / 6);
   }
   
   /* Responsive adjustments for mobile */
@@ -25,7 +25,7 @@
       max-width: calc(100% / 4);
     }
     .flowing-row {
-      animation-duration: 15s; /* Adjust for mobile if needed */
+      animation-duration: 20s /* Adjust for mobile if needed */
     }
   }
   
@@ -38,4 +38,8 @@
       transform: translateX(-100%);
     }
   }
+  
+
+
+  
   

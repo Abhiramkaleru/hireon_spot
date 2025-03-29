@@ -5,6 +5,7 @@ const authRoutes  = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes")
 const jobsRoutes = require("./routes/jobRoutes")
 const interestedjobs = require("./routes/intrestedjobsRoutes")
+const appliedjobs=require("./routes/appliedJobsRoutes")
 require("dotenv").config();
 
 const app = express();
@@ -36,6 +37,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin",adminRoutes);
 app.use("/api/jobs",jobsRoutes)
 app.use("/api/interested",interestedjobs)
+app.use("/api/applyjobs",appliedjobs)
 app.get("/",(req,res)=>{
     res.send("ROOT API IS WORINKING")
 })

@@ -186,7 +186,7 @@ const PostJob = () => {
 
   return (
     <div className="max-w-lg w-full mx-auto bg-white p-4 md:p-6 rounded-xl shadow-md">
-      <h2 className="text-xl md:text-2xl font-bold mb-4 text-center" style={{ color: "#004aad" }}>
+      <h2 className="text-xl md:text-2xl font-bold mb-4 text-center" style={{ color:"#FF8541" }}>
         Post a New Job
       </h2>
 
@@ -290,7 +290,7 @@ const PostJob = () => {
             disabled={loading}
             className="w-full py-2 text-lg"
             style={{
-              background: "linear-gradient(90deg, #ff9900 0%, #004aad 100%)",
+              background: "linear-gradient(90deg, #ff8541\ 0%,rgb(0, 0, 0) 100%)",
               border: "none",
               color: "white",
             }}

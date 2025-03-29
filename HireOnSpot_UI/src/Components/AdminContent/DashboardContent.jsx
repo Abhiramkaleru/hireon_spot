@@ -72,7 +72,10 @@ const AdminProfile = () => {
 
         {/* Save Button */}
         <Form.Item>
-          <Button type="primary" block onClick={handleSave}>
+          <Button type="primary" block onClick={handleSave} style={{       borderColor: "#FF8541",
+                background: "linear-gradient(90deg, #ff8541 0%,rgb(0, 0, 0) 100%)",
+                border: "none",
+                color: "white",}}>
             Save Profile
           </Button>
         </Form.Item>
