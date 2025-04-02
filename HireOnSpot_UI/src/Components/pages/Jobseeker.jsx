@@ -275,6 +275,7 @@ import DashBoardOverview from "../JobseekerContent/DashBoardOverview";
 import InterestedJobs from "../JobseekerContent/IntrestedJobs";
 import JobSeekerProfile from "../JobseekerContent/MyProfile";
 import SVGComponent from "../SvgComponent";
+import UpdateApplicationStatus from "../JobseekerContent/AppledJobsAndUpdate";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { useBreakpoint } = Grid;
@@ -320,6 +321,9 @@ const JobSeekerDashboard = () => {
       case "4":
         setSelectedComponent(<JobSeekerProfile />);
         break;
+      case "5":
+        setSelectedComponent(<UpdateApplicationStatus/>);
+        break;
       default:
         setSelectedComponent(<JobseekerDashboard />);
     }
@@ -333,6 +337,7 @@ const JobSeekerDashboard = () => {
     { key: "1", icon: <DashboardOutlined />, label: "Dashboard" },
     { key: "2", icon: <EyeOutlined />, label: "View Jobs" },
     { key: "3", icon: <HeartOutlined />, label: "Saved Jobs" },
+    { key: "5", icon: <UserOutlined />, label: "Update Status" },
     { key: "4", icon: <UserOutlined />, label: "Profile" },
   ];
 
@@ -363,7 +368,7 @@ const JobSeekerDashboard = () => {
       </div>
     );
   };
-  
+
 
   // Custom theme for menu to use #FF8541 as the active item background
   const menuTheme = {
@@ -402,7 +407,7 @@ const JobSeekerDashboard = () => {
         defaultSelectedKeys={["1"]}
         onClick={handleMenuClick}
         items={menuItems}
-        style={{ 
+        style={{
           background: "black",
           // Add custom CSS for selected items
           // This is a fallback if the theme token approach doesn't work
@@ -443,7 +448,7 @@ const JobSeekerDashboard = () => {
         defaultSelectedKeys={["1"]}
         onClick={handleMenuClick}
         items={menuItems}
-        style={{ 
+        style={{
           background: "black",
           "--ant-primary-color": "#FF8541",
         }}
@@ -458,7 +463,7 @@ const JobSeekerDashboard = () => {
       `}</style>
     </Drawer>
   );
-  
+
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -484,15 +489,16 @@ const JobSeekerDashboard = () => {
               type="text"
               icon={<MenuOutlined />}
               onClick={() => setDrawerVisible(true)}
-              style={{ marginRight: 1, 
+              style={{
+                marginRight: 1,
               }}
             />
           )}
-          <Button 
-            type="primary" 
-            onClick={handleLogout} 
-            style={{ 
-              width: isMobile ? "70px" : "80px", 
+          <Button
+            type="primary"
+            onClick={handleLogout}
+            style={{
+              width: isMobile ? "70px" : "80px",
               height: isMobile ? "30px" : "35px",
               // background: "#FF8541",
               borderColor: "#FF8541",
@@ -515,7 +521,7 @@ const JobSeekerDashboard = () => {
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
             minHeight: "80vh",
-            minWidth:"100%"
+            minWidth: "100%"
           }}
         >
           {selectedComponent}

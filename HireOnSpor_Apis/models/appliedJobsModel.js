@@ -36,17 +36,25 @@ const deleteApplication = async (id, user_id) => {
   ]);
 };
 
-// Get all applied jobs for a jobseeker
+
+
 const getAppliedJobsByUser = async (user_id) => {
   return db.execute(
-    `SELECT aj.id, aj.status, aj.comments, aj.apply_date, 
-                j.id AS job_id, j.title AS job_title, j.company AS company_name
-         FROM applied_jobs aj
-         JOIN jobs j ON aj.job_id = j.id
-         WHERE aj.user_id = ?`,
+    `SELECT 
+        aj.id, 
+        aj.status, 
+        aj.comments, 
+        CAST(aj.apply_date AS CHAR) AS apply_date, 
+        j.id AS job_id, 
+        j.title AS job_title, 
+        j.company_name AS company_name
+     FROM applied_jobs aj
+     JOIN jobs j ON aj.job_id = j.id
+     WHERE aj.user_id = ?`,
     [user_id]
   );
 };
+
 
 const getAllApplications = async () => {
   return db.execute(

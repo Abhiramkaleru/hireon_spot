@@ -62,12 +62,31 @@ const getAppliedJobsForUser = async (req, res) => {
     try {
         const user_id = req.user.id;
 
-        const [appliedJobs] = await AppliedJobs.getAppliedJobsByUser(user_id);
-        res.status(200).json({ count: appliedJobs.length, applications: appliedJobs });
+        const [appliedJobs] = await AppliedJobs.getAppliedJobsByUser(user_id); // Ensure correct destructuring
+
+        if (!appliedJobs || appliedJobs.length === 0) {
+            return res.status(200).json({ count: 0, applications: [] });
+        }
+
+        // Ensure all data is properly formatted
+        const formattedJobs = appliedJobs.map(job => ({
+            id: job.id,
+            status: job.status ? job.status.toString() : "pending",
+            comments: job.comments ? job.comments.toString() : null,
+            apply_date: job.apply_date ? job.apply_date.toString() : null,
+            job_id: job.job_id,
+            job_title: job.job_title || "N/A",
+            company_name: job.company_name || "N/A"
+        }));
+
+        res.status(200).json({ count: formattedJobs.length, applications: formattedJobs });
     } catch (error) {
+        console.error("❌ Error fetching applied jobs:", error); // Enhanced logging
         res.status(500).json({ error: "Server error while fetching applied jobs" });
     }
 };
+
+
 
 
 const getAllApplications = async (req, res) => {
