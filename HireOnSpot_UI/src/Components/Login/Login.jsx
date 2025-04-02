@@ -266,7 +266,6 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [guestRole, setGuestRole] = useState('job_seeker'); // Default to job_seeker
-  console.log(baseUrl);
 
 
   useEffect(() => {

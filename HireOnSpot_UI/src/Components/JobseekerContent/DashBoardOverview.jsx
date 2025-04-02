@@ -160,6 +160,7 @@ const DashBoardOverview = () => {
   const dispatch = useDispatch();
 
   const { interestedCount } = useSelector((state) => state.jobs);
+  const { count } = useSelector((state) => state.appliedJobs);
 
   useEffect(() => {
     dispatch(fetchInterestedCount());
@@ -167,7 +168,7 @@ const DashBoardOverview = () => {
 
   const profile = {
     name: auth?.user?.name || "Job Seeker",
-    appliedJobs: 5,
+    appliedJobs: count,
     savedJobs: 10,
     profileCompletion: 80,
   };
@@ -202,8 +203,8 @@ const DashBoardOverview = () => {
           {[
             {
               icon: <FileDoneOutlined style={getIconStyle(isMobile, "#FF8541")} />,
-              value: profile.appliedJobs,
-              text: "Walk-in Jobs Applied",
+              value: count,
+              text: "Jobs Applied",
             },
             {
               icon: <SaveOutlined style={getIconStyle(isMobile, "#FF8541")} />,

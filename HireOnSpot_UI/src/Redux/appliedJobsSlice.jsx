@@ -28,7 +28,7 @@ export const applyForJob = createAsyncThunk("appliedJobs/apply", async ({ job_id
 export const fetchAppliedJobsForUser = createAsyncThunk("appliedJobs/fetchUserJobs", async (_, { rejectWithValue }) => {
   try {
     const response = await axios.get(`${API_URL}/user`, getAuthHeaders());
-    return response.data.applications;
+    return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data?.message || "Error fetching applied jobs");
   }
@@ -79,6 +79,7 @@ const appliedJobsSlice = createSlice({
   initialState: {
     applications: [], // ✅ Single array for all applications
     isLoading: false,
+    count: 0,
     error: null,
   },
   reducers: {},
@@ -96,7 +97,8 @@ const appliedJobsSlice = createSlice({
       .addCase(fetchAppliedJobsForUser.pending, (state) => { state.isLoading = true; })
       .addCase(fetchAppliedJobsForUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.applications = action.payload;
+        state.applications = action.payload.applications;
+        state.count = action.payload.count; 
       })
       .addCase(fetchAppliedJobsForUser.rejected, (state, action) => {
         state.isLoading = false;
