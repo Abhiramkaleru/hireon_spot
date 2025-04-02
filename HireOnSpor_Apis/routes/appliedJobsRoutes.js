@@ -1,5 +1,5 @@
 const express = require("express");
-const { applyForJob, updateApplicationStatus, getApplicationsForEmployer, deleteApplication, getAppliedJobsForUser } = require("../controllers/appliedJobsControllers");
+const { applyForJob, updateApplicationStatus, getApplicationsForEmployer, deleteApplication, getAppliedJobsForUser,getAllApplications } = require("../controllers/appliedJobsControllers");
 const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router();
@@ -18,5 +18,7 @@ router.delete("/:id", protect, deleteApplication);
 
 // Jobseeker views their applied jobs
 router.get("/user", protect, getAppliedJobsForUser);
+
+router.get("/applications",protect, getAllApplications);
 
 module.exports = router;

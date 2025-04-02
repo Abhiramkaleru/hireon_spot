@@ -70,4 +70,14 @@ const getAppliedJobsForUser = async (req, res) => {
 };
 
 
-module.exports = { applyForJob, updateApplicationStatus, getApplicationsForEmployer, deleteApplication,getAppliedJobsForUser };
+const getAllApplications = async (req, res) => {
+    try {
+        const [applications] = await AppliedJobs.getAllApplications();
+        res.status(200).json({ success: true, data: applications });
+    } catch (error) {
+        console.error("Error fetching job applications:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+};
+
+module.exports = { applyForJob, updateApplicationStatus, getApplicationsForEmployer, deleteApplication,getAppliedJobsForUser,getAllApplications };

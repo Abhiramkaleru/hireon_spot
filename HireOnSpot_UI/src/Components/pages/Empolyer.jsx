@@ -248,7 +248,8 @@ import EmployerProfile from "../EmployerContent/EmployerProfile";
 import PublicPostings from "../EmployerContent/PublicPosting";
 import PrivatePostings from "../EmployerContent/PrivatePosting";
 import SVGComponent from "../SvgComponent";
-import JobStatus from "../EmployerContent/JobStatus";
+// import JobStatus from "../EmployerContent/JobStatus";
+import AllApplications from "../EmployerContent/AllApplications";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { useBreakpoint } = Grid;
@@ -279,7 +280,7 @@ const EmployerDashboard = () => {
         setSelectedComponent(<JobManager />);
         break;
       case "4":
-        setSelectedComponent(<JobStatus />);
+        setSelectedComponent(<AllApplications/>);
         break;
       case "5":
         setSelectedComponent(<PublicPostings />);

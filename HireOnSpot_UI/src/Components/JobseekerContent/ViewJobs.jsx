@@ -177,7 +177,7 @@ import { fetchJobs, fetchInterestedJobs, addInterestedJob } from "../../Redux/Jo
 import { Modal, Button } from "antd";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import ApplyForJobForm from "./ApplyForJobForm";
 const ViewJobs = () => {
   const dispatch = useDispatch();
   const { jobs, loading, error } = useSelector((state) => state.jobs);
@@ -185,10 +185,18 @@ const ViewJobs = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [countdowns, setCountdowns] = useState({});
 
+  const [isApplyModalVisible, setIsApplyModalVisible] = useState(false);
+
   useEffect(() => {
     dispatch(fetchJobs());
     dispatch(fetchInterestedJobs());
   }, [dispatch]);
+
+
+  const handleApplyNow = (job) => {
+    setSelectedJob(job);
+    setIsApplyModalVisible(true);
+  };
 
   useEffect(() => {
     const updateCountdowns = () => {
@@ -362,8 +370,33 @@ const ViewJobs = () => {
             </p>
 
             <p><strong>Company LinkedIn:</strong> <a href={selectedJob.company_linkedin} target="_blank" rel="noopener noreferrer">{selectedJob.company_linkedin}</a></p>
+            {/* Apply Now Button */}
+            <Button
+              type="primary"
+              style={{
+                marginTop: "10px",
+                backgroundColor: "#FF8541",
+                borderColor: "#FF8541",
+                width: "100%",
+              }}
+              onClick={() => handleApplyNow(selectedJob)}
+            >
+              Apply Now
+            </Button>
           </div>
         )}
+        {/* Apply Job Modal */}
+        <Modal
+          title={`Apply for ${selectedJob?.title}`}
+          open={isApplyModalVisible}
+          onCancel={() => setIsApplyModalVisible(false)}
+          footer={null}
+        >
+          {selectedJob && (
+            <ApplyForJobForm jobId={selectedJob.id} onClose={() => setIsApplyModalVisible(false)} />
+          )}
+        </Modal>
+
       </Modal>
     </div>
   );
