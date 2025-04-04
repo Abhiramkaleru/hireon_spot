@@ -84,7 +84,7 @@ const UpdateApplicationStatus = () => {
   const columns = [
     { title: "Job Title", dataIndex: "job_title", key: "job_title" },
     { title: "Status", dataIndex: "status", key: "status", render: (status, record) => (<><Tag color={status === "hired" ? "green" : status === "pending" ? "orange" : status === "reviewed" ? "blue" : status === "shortlisted" ? "purple" : "red"}>{status}</Tag> <Select defaultValue={status} onChange={(value) => setUpdatedStatus({ ...updatedStatus, [record.id]: value })} style={{ width: "120px" }}>{statusOptions.map((status) => (<Option key={status} value={status}>{status}</Option>))}</Select></>) },
-    { title: "Comments", dataIndex: "comments", key: "comments", render: (comments, record) => (<><span>{comments || "No comments"}</span> <Input placeholder="New Comment" onChange={(e) => setUpdatedComments({ ...updatedComments, [record.id]: e.target.value })} style={{ width: "150px", marginLeft: 8 }} /></>) },
+    { title: "Comments", dataIndex: "comments", key: "comments", render: (comments, record) => (<><span>{comments || "No comments"}</span> <Input required placeholder="New Comment" onChange={(e) => setUpdatedComments({ ...updatedComments, [record.id]: e.target.value })} style={{ width: "150px", marginLeft: 8 }} /></>) },
     { title: "Apply Date", dataIndex: "apply_date", key: "apply_date", render: (date) => dayjs(date).format("YYYY-MM-DD HH:mm") },
     { title: "Update", key: "update", render: (_, record) => (<Button type="primary" onClick={() => handleUpdate(record.id)}>Update</Button>) }
   ];
@@ -95,7 +95,7 @@ const UpdateApplicationStatus = () => {
   return (
     <div>
       <h2>Update Application Status</h2>
-      {isMobile ? (applications.map((app) => (<Card key={app.id} title={app.job_title} style={{ marginBottom: 16 }}><p><b>Status:</b> <Tag>{app.status}</Tag> <Select defaultValue={app.status} onChange={(value) => setUpdatedStatus({ ...updatedStatus, [app.id]: value })} style={{ width: "120px" }}>{statusOptions.map((status) => (<Option key={status} value={status}>{status}</Option>))}</Select></p><p><b>Comments:</b> <span>{app.comments || "No comments"}</span> <Input placeholder="New Comment" onChange={(e) => setUpdatedComments({ ...updatedComments, [app.id]: e.target.value })} style={{ width: "150px", marginLeft: 8 }} /></p><p><b>Applied On:</b> {dayjs(app.apply_date).format("YYYY-MM-DD HH:mm")}</p><Button type="primary" onClick={() => handleUpdate(app.id)}>Update</Button></Card>))) : (<Table columns={columns} dataSource={applications} rowKey="id" />)}
+      {isMobile ? (applications.map((app) => (<Card key={app.id} title={app.job_title} style={{ marginBottom: 16 }}><p><b>Status:</b> <Tag>{app.status}</Tag> <Select defaultValue={app.status} onChange={(value) => setUpdatedStatus({ ...updatedStatus, [app.id]: value })} style={{ width: "120px" }}>{statusOptions.map((status) => (<Option key={status} value={status}>{status}</Option>))}</Select></p><p><b>Comments:</b> <span>{app.comments || "No comments"}</span> <Input required placeholder="New Comment" onChange={(e) => setUpdatedComments({ ...updatedComments, [app.id]: e.target.value })} style={{ width: "150px", marginLeft: 8 }} /></p><p><b>Applied On:</b> {dayjs(app.apply_date).format("YYYY-MM-DD HH:mm")}</p><Button type="primary" onClick={() => handleUpdate(app.id)}>Update</Button></Card>))) : (<Table columns={columns} dataSource={applications} rowKey="id" />)}
     </div>
   );
 };

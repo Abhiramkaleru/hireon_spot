@@ -54,15 +54,26 @@ export const fetchAllApplications = createAsyncThunk("appliedJobs/fetchAll", asy
   }
 });
 
-// ✅ Update Application Status & Comments
-export const updateApplicationStatus = createAsyncThunk("appliedJobs/updateStatus", async ({ id, status, comments }, { rejectWithValue }) => {
-  try {
-    await axios.put(`${API_URL}/${id}`, { status, comments }, getAuthHeaders());
-    return { id, status, comments };
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || "Error updating application status");
+// // ✅ Update Application Status & Comments
+// export const updateApplicationStatus = createAsyncThunk("appliedJobs/updateStatus", async ({ id, status, comments }, { rejectWithValue }) => {
+//   try {
+//     await axios.put(`${API_URL}/${id}`, { status, comments }, getAuthHeaders());
+//     return { id, status, comments };
+//   } catch (error) {
+//     return rejectWithValue(error.response?.data?.message || "Error updating application status");
+//   }
+// });
+export const updateApplicationStatus = createAsyncThunk(
+  "appliedJobs/updateStatus",
+  async ({ id, status, comments }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`${API_URL}/${id}`, { status, comments }, getAuthHeaders());
+      return { id, status, comments }; // Pass only provided fields
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Error updating application status");
+    }
   }
-});
+);
 
 // ✅ Delete Application
 export const deleteApplication = createAsyncThunk("appliedJobs/delete", async (id, { rejectWithValue }) => {
@@ -98,7 +109,7 @@ const appliedJobsSlice = createSlice({
       .addCase(fetchAppliedJobsForUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.applications = action.payload.applications;
-        state.count = action.payload.count; 
+        state.count = action.payload.count;
       })
       .addCase(fetchAppliedJobsForUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -122,19 +133,25 @@ const appliedJobsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(updateApplicationStatus.pending, (state) => { state.isLoading = true; })
+  
+      .addCase(updateApplicationStatus.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(updateApplicationStatus.fulfilled, (state, action) => {
         state.isLoading = false;
         const index = state.applications.findIndex((app) => app.id === action.payload.id);
+
         if (index !== -1) {
-          state.applications[index].status = action.payload.status;
-          state.applications[index].comments = action.payload.comments;
+          // Preserve existing values if status or comments are not provided
+          state.applications[index].status = action.payload.status ?? state.applications[index].status;
+          state.applications[index].comments = action.payload.comments ?? state.applications[index].comments;
         }
       })
       .addCase(updateApplicationStatus.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
+
       .addCase(deleteApplication.pending, (state) => { state.isLoading = true; })
       .addCase(deleteApplication.fulfilled, (state, action) => {
         state.isLoading = false;

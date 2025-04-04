@@ -18,16 +18,38 @@ const updateApplicationStatus = async (req, res) => {
     try {
         const { id } = req.params;
         const { status, comments } = req.body;
-        const user_id = req.user.id;
+        const user_id = req.user.id; // Get authenticated jobseeker ID
 
-        const [result] = await AppliedJobs.updateApplication(id, user_id, status, comments);
-        if (result.affectedRows === 0) return res.status(403).json({ message: "Unauthorized update" });
+        // ✅ Ensure at least one field is provided
+        if (status === undefined && comments === undefined) {
+            return res.status(400).json({ message: "At least one field (status or comments) must be provided." });
+        }
+
+        // ✅ Fetch existing application to prevent overwriting with NULL
+        const [existingApp] = await AppliedJobs.getApplicationById(id, user_id);
+        if (existingApp.length === 0) {
+            return res.status(404).json({ message: "Application not found or unauthorized" });
+        }
+
+        // ✅ Use existing values if fields are not provided
+        const newStatus = status !== undefined ? status : existingApp[0].status;
+        const newComments = comments !== undefined ? comments : existingApp[0].comments;
+
+        // ✅ Update application
+        const [result] = await AppliedJobs.updateApplication(id, user_id, newStatus, newComments);
+        if (result.affectedRows === 0) {
+            return res.status(403).json({ message: "Unauthorized update or no changes made." });
+        }
 
         res.status(200).json({ message: "Application updated successfully" });
     } catch (error) {
+        console.error("Update error:", error);
         res.status(500).json({ error: "Server error while updating application" });
     }
 };
+
+
+
 
 // Get all applications for a job (Employer)
 const getApplicationsForEmployer = async (req, res) => {

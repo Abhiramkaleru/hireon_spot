@@ -500,8 +500,6 @@ const JobSeekerDashboard = () => {
             style={{
               width: isMobile ? "70px" : "80px",
               height: isMobile ? "30px" : "35px",
-              // background: "#FF8541",
-              borderColor: "#FF8541",
               borderColor: "#FF8541",
               background: "linear-gradient(90deg, #ff8541 0%,rgb(0, 0, 0) 100%)",
               border: "none",

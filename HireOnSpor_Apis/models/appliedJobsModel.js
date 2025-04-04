@@ -8,13 +8,22 @@ const applyJob = async (job_id, user_id, resume_url, cover_letter) => {
   );
 };
 
-// Update application status & comments (only by the jobseeker)
-const updateApplication = async (id, user_id, status, comments) => {
+
+
+// ✅ Update application status & comments (only by the jobseeker)
+const updateApplication = (id, user_id, status, comments) => {
   return db.execute(
     "UPDATE applied_jobs SET status = ?, comments = ? WHERE id = ? AND user_id = ?",
     [status, comments, id, user_id]
   );
 };
+
+// ✅ Get existing application details (to prevent NULL overwrites)
+const getApplicationById = (id, user_id) => {
+  return db.execute("SELECT status, comments FROM applied_jobs WHERE id = ? AND user_id = ?", [id, user_id]);
+};
+
+
 
 // Get all applications for a job (Employer view)
 const getApplicationsByJob = async (job_id) => {
@@ -70,6 +79,7 @@ const getAllApplications = async () => {
 module.exports = {
   applyJob,
   updateApplication,
+  getApplicationById,
   getApplicationsByJob,
   deleteApplication,
   getAppliedJobsByUser,
