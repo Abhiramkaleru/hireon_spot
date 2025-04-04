@@ -368,16 +368,21 @@ const ViewJobs = () => {
                 ))
                 : "Not available"}
             </p>
+            <Button type="primary">
+              <a href={selectedJob.company_linkedin} target="_blank" rel="noopener noreferrer" style={{ color: "#fff", textDecoration: "none" }}>
+                Apply via Company Website
+              </a>
+            </Button>
 
-            <p><strong>Company LinkedIn:</strong> <a href={selectedJob.company_linkedin} target="_blank" rel="noopener noreferrer">{selectedJob.company_linkedin}</a></p>
+            {/* <p><strong>Company Apply Link:</strong> <a href={selectedJob.company_linkedin} target="_blank" rel="noopener noreferrer">{selectedJob.company_linkedin}</a></p> */}
             {/* Apply Now Button */}
             <Button
               type="primary"
               style={{
-                marginTop: "10px",
+                margin: "10px",
                 backgroundColor: "#FF8541",
                 borderColor: "#FF8541",
-                width: "100%",
+                // width: "100%",
               }}
               onClick={() => handleApplyNow(selectedJob)}
             >
